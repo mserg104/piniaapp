@@ -1,16 +1,29 @@
 <template>
+  <main>
   <header class="header">
     <img src="/logo.svg" alt="logo" class="header-logo">
     <h1>My Favorite Movies</h1>
   </header>
-  <div class="movies">
-    <h3>All movies</h3>
-    <Movie></Movie>
-    {{movieStore.movies}}
+  <div class="tabs">
+    <button :class="['btn', { btn_green: movieStore.activeTab === 1 }]" @click="movieStore.setActiveTab(1)">Favorite</button>
+    <button :class="['btn', { btn_green: movieStore.activeTab === 2 }]" @click="movieStore.setActiveTab(2)">Search</button>
   </div>
 
+  <div class="movies" v-if="movieStore.activeTab===1">
+    <div>
+      <h3>Watched movies (count: {{ movieStore.watchedMovies.length }})</h3>
+    <Movie v-for="movie of movieStore.watchedMovies" :key="movie.id" :movie="movie" /> 
+    </div>
+    <h3>All movies (count:{{movieStore.totalCountMovies}})</h3>
+    <Movie v-for="movie of movieStore.movies" :key="movie.id" :movie="movie" />   
+  </div>
+  <div class="search" v-else>
+    <Search></Search>
+  </div>
+</main>
 </template>
 <script setup>
+import Search from './components/Search.vue'
 import Movie from './components/Movie.vue'
 import {useMovieStore} from './stores/MovieStore'
 const movieStore=useMovieStore();
