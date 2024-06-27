@@ -8,6 +8,7 @@
       v-for="user of searchStore.users"
       :key="user.id"
       :user="user"
+      :isSearch="true"
       />
   </div>
 </template>
@@ -15,7 +16,7 @@
 <script setup>
 import {ref} from 'vue'
 import Loader from "../components/Loader.vue";
-import User from '../components/Loader.vue';
+import User from '../components/User.vue';
 import { useSearchStore } from "../stores/SearchStore";
 const searchStore = useSearchStore();
 const searchMovie=ref('')
